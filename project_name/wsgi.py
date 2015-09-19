@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-from floodgaming import settings
+from {{project_name | lower}} import settings
 
 
 os.environ.setdefault("DJANGO_LOCATION","production")
