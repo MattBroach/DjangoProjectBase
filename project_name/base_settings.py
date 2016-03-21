@@ -14,7 +14,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
  
-secret_file = open('secret_keys.json').read()
+secret_file = open(os.path.join(os.path.dirname(__file__),'secret_keys.json'),'r').read()
 
 SECRETS = json.loads(secret_file)
 SECRET_KEY = SECRETS['django_key'] 
@@ -47,7 +47,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'base_templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,5 +112,5 @@ MEDIA_URL = '/media/'
 
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'extra_static'),
+    os.path.join(BASE_DIR, 'base_static'),
 )

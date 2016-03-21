@@ -1,8 +1,9 @@
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 
 import debug_toolbar
 
-from production_urls import urlpatterns
+from .production_urls import urlpatterns
 
 
 # Django debug toolbars patterns 
