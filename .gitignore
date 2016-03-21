@@ -11,7 +11,13 @@ Thumbs.db
 # Running Vagrant Info #
 ########################
 .vagrant/
+Vagrantfile
+setup.sh
 
 # Compiled Code #
 #################
 *.pyc
+
+# Editor files #
+################
+*.swp

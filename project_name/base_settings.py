@@ -10,38 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-#Use Environment Variable DJANGO_LOCATION to determine location:
-#options are: local, staging, and production
-DJANGO_LOCATION = os.environ['DJANGO_LOCATION']
  
-from {{project_name | lower}}.secret_keys import DJANGO_KEY
-SECRET_KEY = DJANGO_KEY
+secret_file = open('secret_keys.json').read()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# SECURITY WARNING: don't run with debug turned on in production!
-if DJANGO_LOCATION == 'local':
-    ALLOWED_HOSTS = []
-
-else:
-    ALLOWED_HOSTS = []
+SECRETS = json.loads(secret_file)
+SECRET_KEY = SECRETS['django_key'] 
 
 
-if DJANGO_LOCATION == 'local':
-    DEBUG = True
-else:
-    DEBUG = False
-
-
-# Application definition
-
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,30 +28,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-)
+]
 
-# django-debug-toolbar settings
-if DEBUG:
-    INSTALLED_APPS += ('debug_toolbar',)
-
-    INTERNAL_IPS = ('::ffff:10.0.2.2',)
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 
 )
 
-ROOT_URLCONF = '{{project_name | lower}}.urls'
 
 TEMPLATES = [
     {
@@ -93,9 +63,6 @@ TEMPLATES = [
 WSGI_APPLICATION = '{{project_name | lower}}.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -106,6 +73,21 @@ DATABASES = {
     }
 }
 
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -129,10 +111,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 
-#Set staticfiles for development
-if DJANGO_LOCATION == 'local':
-    STATIC_ROOT = '/vagrant/static/'
-    MEDIA_ROOT = '/vagrant/media/'
 else:
     STATIC_ROOT = '/{{project_name}}/static/'
     MEDIA_ROOT = '/{{project_name}}/media/'
@@ -140,8 +118,3 @@ else:
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'extra_static'),
 )
-
-
-# Debug toolbar settings
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-
