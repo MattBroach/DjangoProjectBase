@@ -111,10 +111,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 
-else:
-    STATIC_ROOT = '/{{project_name}}/static/'
-    MEDIA_ROOT = '/{{project_name}}/media/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'extra_static'),
 )
