@@ -1,6 +1,6 @@
 import os
 
-from .base_settings import *
+from .base import *
 
 # Dev Environment specific settings
 DEBUG = False 
