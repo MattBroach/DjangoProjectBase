@@ -13,7 +13,7 @@ INTERNAL_IPS = ('::ffff:10.0.2.2',)
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
-MIDDLEWARE_CLASSES = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE_CLASSES
+MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE
 
 #Staticfiles settings
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
